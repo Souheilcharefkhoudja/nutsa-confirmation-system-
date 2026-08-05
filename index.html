@@ -28,22 +28,34 @@
       <div class="header-left">
         <div class="agent-badge" id="agent-badge">A1</div>
         <div>
-          <p class="header-title">Bonjour, Agent <span id="agent-num">1</span></p>
+          <p class="header-title">Nutsa <span class="pill" id="total-pill">0</span></p>
           <p class="header-sub" id="header-date"></p>
         </div>
       </div>
     </div>
 
     <div class="stats-row">
-      <div class="stat">
+      <div class="stat" data-jump="Pending">
         <div class="stat-num" id="stat-pending">0</div>
-        <div class="stat-label">En attente</div>
+        <div class="stat-label">Attente</div>
       </div>
-      <div class="stat stat-green">
+      <div class="stat stat-purple" data-jump="Callback">
+        <div class="stat-num" id="stat-callback">0</div>
+        <div class="stat-label">Rappel</div>
+      </div>
+      <div class="stat stat-orange" data-jump="No Answer">
+        <div class="stat-num" id="stat-noans">0</div>
+        <div class="stat-label">Sans rép.</div>
+      </div>
+      <div class="stat stat-green" data-jump="Confirmed">
         <div class="stat-num" id="stat-confirmed">0</div>
         <div class="stat-label">Confirmées</div>
       </div>
-      <div class="stat stat-red">
+      <div class="stat stat-livred" data-jump="Livré">
+        <div class="stat-num" id="stat-livre">0</div>
+        <div class="stat-label">Livrées</div>
+      </div>
+      <div class="stat stat-red" data-jump="Cancelled">
         <div class="stat-num" id="stat-cancelled">0</div>
         <div class="stat-label">Annulées</div>
       </div>
@@ -56,10 +68,13 @@
     <button class="chip" data-filter="Callback">Rappeler</button>
     <button class="chip" data-filter="No Answer">Sans réponse</button>
     <button class="chip" data-filter="Confirmed">Confirmées</button>
+    <button class="chip" data-filter="Livré">Livrées</button>
+    <button class="chip" data-filter="Cancelled">Annulées</button>
+    <button class="chip" data-filter="Split">Split</button>
   </div>
 
   <div class="search-bar">
-    <input type="search" id="search-input" placeholder="🔍 Rechercher (nom, téléphone, N°)">
+    <input type="search" id="search-input" placeholder="🔍 Nom, téléphone, N° commande, commune, tracking…">
   </div>
 
   <main id="orders-list" class="orders-list">

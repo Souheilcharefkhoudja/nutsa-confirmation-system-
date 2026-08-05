@@ -382,8 +382,23 @@ input {
   opacity: 0.85;
   margin-top: 4px;
 }
-.stat-green { background: rgba(200, 230, 201, 0.25); }
-.stat-red   { background: rgba(255, 205, 210, 0.25); }
+.stat-green   { background: rgba(200, 230, 201, 0.25); }
+.stat-red     { background: rgba(255, 205, 210, 0.25); }
+.stat-orange  { background: rgba(255, 224, 178, 0.25); }
+.stat-purple  { background: rgba(225, 190, 231, 0.25); }
+.stat-livred  { background: rgba(27, 94, 32, 0.55); }
+.stat[data-jump] { cursor: pointer; transition: transform .15s var(--ease); }
+.stat[data-jump]:hover { transform: translateY(-2px); }
+
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  background: rgba(255,255,255,0.25);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: 6px;
+}
 
 /* ============================================================
    FILTER + SEARCH
@@ -471,6 +486,102 @@ input {
 .order-card.status-Livré::before     { background: var(--green); }
 .order-card.status-Callback::before  { background: var(--purple); }
 .order-card.status-NoAnswer::before  { background: var(--orange); }
+.order-card.status-Split::before     { background: #757575; }
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.card-top-left {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.order-ref {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+.date-tag {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.source-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.src-shopify { background: #5E8E3E; color: white; }
+.src-web     { background: var(--blue); color: white; }
+.src-ig      { background: linear-gradient(135deg, #E4405F, #833AB4); color: white; }
+.src-vip     { background: linear-gradient(135deg, var(--gold), var(--gold-2)); color: white; }
+.src-meriem  { background: var(--blue); color: white; }
+.src-manual  { background: var(--ink-soft); color: white; }
+
+.sent-tag {
+  font-size: 12px;
+  padding: 1px 6px;
+  background: var(--green-soft);
+  color: var(--green);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.order-phone {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.card-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+
+.ds-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-transform: lowercase;
+}
+.ds-delivered { background: var(--green); color: white; }
+.ds-returned  { background: #FFCDD2; color: var(--red); }
+.ds-cancelled { background: #FFCDD2; color: var(--red); }
+.ds-failed    { background: #FFCCBC; color: #D84315; }
+.ds-transit   { background: #BBDEFB; color: var(--blue); }
+.ds-hub       { background: #E1F5FE; color: #0277BD; }
+.ds-pending   { background: var(--gold-soft); color: var(--gold-2); }
+.ds-unknown   { background: #EEEEEE; color: #616161; }
+
+.track-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--cream-2);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  border: 1px solid var(--line);
+}
 
 .order-head {
   display: flex;
@@ -672,6 +783,34 @@ input {
   font-size: 20px;
   font-weight: 700;
   box-shadow: 0 4px 14px var(--green-glow);
+}
+
+.detail-badges {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.detail-cell {
+  background: white;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+.detail-cell .detail-label { margin-bottom: 4px; }
+.detail-cell .detail-value {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-weight: 600;
 }
 
 .detail-section {
