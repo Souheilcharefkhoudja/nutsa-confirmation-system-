@@ -38,8 +38,7 @@ function fmtDate(iso) {
   try {
     const d = new Date(iso);
     const now = new Date();
-    const diffMs = now - d;
-    const mins = Math.floor(diffMs / 60000);
+    const mins = Math.floor((now - d) / 60000);
     if (mins < 1) return "À l'instant";
     if (mins < 60) return `il y a ${mins} min`;
     const hrs = Math.floor(mins / 60);
@@ -47,6 +46,27 @@ function fmtDate(iso) {
     const days = Math.floor(hrs / 24);
     if (days < 7) return `il y a ${days}j`;
     return d.toLocaleDateString(CFG.LOCALE, { day: "numeric", month: "short" });
+  } catch { return iso; }
+}
+
+// Absolute date + time (e.g. "05/08 · 16:26")
+function fmtDateTime(iso) {
+  if (!iso) return "";
+  try {
+    const d = new Date(iso);
+    const date = d.toLocaleDateString(CFG.LOCALE, { day: "2-digit", month: "2-digit" });
+    const time = d.toLocaleTimeString(CFG.LOCALE, { hour: "2-digit", minute: "2-digit" });
+    return `${date} · ${time}`;
+  } catch { return iso; }
+}
+
+// Full date + time for the detail sheet
+function fmtDateTimeLong(iso) {
+  if (!iso) return "";
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString(CFG.LOCALE, { weekday: "short", day: "numeric", month: "long", year: "numeric" }) +
+           " à " + d.toLocaleTimeString(CFG.LOCALE, { hour: "2-digit", minute: "2-digit" });
   } catch { return iso; }
 }
 
@@ -260,7 +280,10 @@ function orderCardHTML(o) {
           ${sourceTag ? `<span class="source-tag src-${sourceTag.cls}">${sourceTag.label}</span>` : ""}
           ${o.sent_ok ? `<span class="sent-tag" title="Envoyé à Anderson">✅</span>` : ""}
         </div>
-        <span class="date-tag">${fmtDate(o.date)}</span>
+        <span class="date-tag" title="${esc(fmtDateTimeLong(o.date))}">
+          🕒 ${esc(fmtDateTime(o.date))}
+          <span class="date-rel">· ${esc(fmtDate(o.date))}</span>
+        </span>
       </div>
 
       <div class="order-head">
@@ -381,8 +404,8 @@ function openOrder(orderNum) {
         <div class="detail-value">${o.qty || 1}</div>
       </div>
       <div class="detail-cell">
-        <div class="detail-label">Date</div>
-        <div class="detail-value">${fmtDate(o.date)}</div>
+        <div class="detail-label">Date &amp; heure</div>
+        <div class="detail-value">${esc(fmtDateTimeLong(o.date))}</div>
       </div>
     </div>
 

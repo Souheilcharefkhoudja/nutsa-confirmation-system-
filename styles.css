@@ -508,7 +508,18 @@ input {
   letter-spacing: 0.03em;
 }
 .date-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 11px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  background: var(--cream-2);
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.date-tag .date-rel {
   color: var(--muted);
   font-weight: 500;
 }
