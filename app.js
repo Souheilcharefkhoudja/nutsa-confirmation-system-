@@ -77,8 +77,18 @@ async function apiPost(body) {
 // SCREENS
 // ============================================================
 function showScreen(id) {
-  $$(".screen").forEach(s => s.classList.remove("active"));
-  $("#" + id).classList.add("active");
+  console.log("[nutsa] showScreen →", id);
+  $$(".screen").forEach(s => {
+    s.classList.remove("active");
+    s.style.display = "none";
+  });
+  const target = $("#" + id);
+  if (target) {
+    target.classList.add("active");
+    target.style.display = "block";
+  } else {
+    console.error("[nutsa] screen not found:", id);
+  }
 }
 
 // ============================================================
@@ -108,6 +118,7 @@ async function autoLogin() {
 // DASHBOARD
 // ============================================================
 function enterDashboard() {
+  console.log("[nutsa] enterDashboard");
   showScreen("dashboard-screen");
   $("#agent-num").textContent = state.worker;
   $("#agent-badge").textContent = "A" + state.worker;
@@ -405,14 +416,34 @@ document.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  console.log("[nutsa] boot");
   // Resume cached session or auto-login
   const token = localStorage.getItem(LS_TOKEN);
   const worker = localStorage.getItem(LS_WORKER);
   if (token && worker) {
+    console.log("[nutsa] resuming session for worker", worker);
     state.token = token;
     state.worker = Number(worker);
     enterDashboard();
   } else {
+    console.log("[nutsa] no cached session, auto-login");
     autoLogin();
   }
 });
+
+// Safety net: if 12s after boot we're still on splash, force dashboard shell
+setTimeout(() => {
+  const splash = document.getElementById("splash-screen");
+  if (splash && splash.classList.contains("active")) {
+    console.warn("[nutsa] splash stuck — forcing dashboard");
+    const t = localStorage.getItem(LS_TOKEN);
+    const w = localStorage.getItem(LS_WORKER);
+    if (t && w) {
+      state.token = t;
+      state.worker = Number(w);
+      enterDashboard();
+    } else {
+      autoLogin();
+    }
+  }
+}, 12000);
