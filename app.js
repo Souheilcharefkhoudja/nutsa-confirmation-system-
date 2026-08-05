@@ -10,6 +10,7 @@
 const CFG = window.NUTSA_CONFIG;
 const LS_TOKEN  = "nutsa_wtoken";
 const LS_WORKER = "nutsa_worker";
+const LS_ORDERS = "nutsa_orders_cache";
 
 const state = {
   token: null,
@@ -117,6 +118,17 @@ function enterDashboard() {
   });
 
   initDashboardEvents();
+
+  // Show cached orders instantly if we have any
+  try {
+    const cached = JSON.parse(localStorage.getItem(LS_ORDERS) || "null");
+    if (cached && Array.isArray(cached.orders) && cached.worker === state.worker) {
+      state.orders = cached.orders;
+      updateStats();
+      renderOrders();
+    }
+  } catch(e) {}
+
   loadOrders();
 
   if (CFG.AUTO_REFRESH_SECONDS > 0) {
@@ -165,6 +177,7 @@ async function loadOrders() {
       throw new Error(res.error || "load failed");
     }
     state.orders = res.orders || [];
+    try { localStorage.setItem(LS_ORDERS, JSON.stringify({ worker: state.worker, orders: state.orders })); } catch(e) {}
     updateStats();
     renderOrders();
   } catch (err) {
